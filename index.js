@@ -45,9 +45,9 @@ const filterByPrice = requiredRange => {
   });
 };
 
-// console.log(filterByPrice(requiredRange1));
-// console.log(filterByPrice(requiredRange2));
-// console.log(filterByPrice(requiredRange3));
+console.log(filterByPrice(requiredRange1));
+console.log(filterByPrice(requiredRange2));
+console.log(filterByPrice(requiredRange3));
 
 const sortByAscending = courses => {
   // Создаём копию массива
