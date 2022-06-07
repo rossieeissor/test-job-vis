@@ -15,6 +15,7 @@ let requiredRange1 = [null, 200];
 let requiredRange2 = [100, 350];
 let requiredRange3 = [200, null];
 
+// Функция фильтрации
 const filterByPrice = requiredRange => {
   // Деструктурируем заданный диапазон
   let [minFilterPrice, maxFilterPrice] = requiredRange;
@@ -37,10 +38,16 @@ const filterByPrice = requiredRange => {
     // Если максимальная цена не указана, принимаем её за бесконечность
     else if (maxCoursePrice === null) maxCoursePrice = Infinity;
 
-    // Проверяем, чтобы минимальная цена фильтра находилась в диапазоне между минимальной и максимальной ценами курса. А затем также проверяем максимальную цену фильтра. Если хотя бы одно из выражений верно, то такой курс удовлетворяет требованиям фильтра
+    // Проверяем, чтобы минимальная цена фильтра находилась в диапазоне между минимальной и максимальной ценами курса.
+    // Затем также проверяем максимальную цену фильтра.
+    // Затем проверяем, чтобы минимальная цена курса находилась в диапазоне между ценами фильтра
+    // И, наконец, проверяем, также максимальную цену курса
+    // Если хотя бы одно из выражений верно, то такой курс удовлетворяет требованиям фильтра
     return (
       (minFilterPrice >= minCoursePrice && minFilterPrice <= maxCoursePrice) ||
-      (maxFilterPrice >= minCoursePrice && maxFilterPrice <= maxCoursePrice)
+      (maxFilterPrice >= minCoursePrice && maxFilterPrice <= maxCoursePrice) ||
+      (minCoursePrice >= minFilterPrice && minCoursePrice <= maxFilterPrice) ||
+      (maxCoursePrice >= minFilterPrice && maxCoursePrice <= maxFilterPrice)
     );
   });
 };
@@ -49,6 +56,7 @@ console.log(filterByPrice(requiredRange1));
 console.log(filterByPrice(requiredRange2));
 console.log(filterByPrice(requiredRange3));
 
+// Функция сортировки по возрастанию цены
 const sortByAscending = courses => {
   // Создаём копию массива
   let sortedCourses = [...courses];
@@ -72,15 +80,15 @@ const sortByAscending = courses => {
     } else if (minCoursePriceA === null && maxCoursePriceA === null) return 1;
     else if (minCoursePriceB === null && maxCoursePriceB === null) return -1;
 
-    // Если минимальная цена "А" не указана, приравниваем минимальную цену к максимальной
-    if (minCoursePriceA === null) minCoursePriceA = maxCoursePriceA;
-    // Если максимальная цена "А" не указана, приравниваем максимальную цену к минимальной
-    else if (maxCoursePriceA === null) maxCoursePriceA = minCoursePriceA;
+    // Если минимальная цена "А" не указана, принимаем её за 0
+    if (minCoursePriceA === null) minCoursePriceA = 0;
+    // Если максимальная цена "А" не указана, принимаем её за бесконечность
+    else if (maxCoursePriceA === null) maxCoursePriceA = Infinity;
 
-    // Если минимальная цена "B" не указана, приравниваем минимальную цену к максимальной
-    if (minCoursePriceB === null) minCoursePriceB = maxCoursePriceB;
-    // Если максимальная цена "B" не указана, приравниваем максимальную цену к минимальной
-    else if (maxCoursePriceB === null) maxCoursePriceB = minCoursePriceB;
+    // Если минимальная цена "B" не указана, принимаем её за 0
+    if (minCoursePriceB === null) minCoursePriceB = 0;
+    // Если максимальная цена "B" не указана, принимаем её за бесконечность
+    else if (maxCoursePriceB === null) maxCoursePriceB = Infinity;
 
     // Если минимальные цены равны, сортируем по максимальной цене
     if (minCoursePriceA === minCoursePriceB)
@@ -91,8 +99,9 @@ const sortByAscending = courses => {
   });
 };
 
-// console.log(sortByAscending(courses));
+console.log(sortByAscending(courses));
 
+// Функция сортировки по убыванию цены
 const sortByDescending = courses => {
   // Создаём копию массива
   let sortedCourses = [...courses];
@@ -116,23 +125,23 @@ const sortByDescending = courses => {
     } else if (minCoursePriceA === null && maxCoursePriceA === null) return 1;
     else if (minCoursePriceB === null && maxCoursePriceB === null) return -1;
 
-    // Если минимальная цена "А" не указана, приравниваем минимальную цену к максимальной
-    if (minCoursePriceA === null) minCoursePriceA = maxCoursePriceA;
-    // Если максимальная цена "А" не указана, приравниваем максимальную цену к минимальной
-    else if (maxCoursePriceA === null) maxCoursePriceA = minCoursePriceA;
+    // Если минимальная цена "А" не указана, принимаем её за 0
+    if (minCoursePriceA === null) minCoursePriceA = 0;
+    // Если максимальная цена "А" не указана, принимаем её за бесконечность
+    else if (maxCoursePriceA === null) maxCoursePriceA = Infinity;
 
-    // Если минимальная цена "B" не указана, приравниваем минимальную цену к максимальной
-    if (minCoursePriceB === null) minCoursePriceB = maxCoursePriceB;
-    // Если максимальная цена "B" не указана, приравниваем максимальную цену к минимальной
-    else if (maxCoursePriceB === null) maxCoursePriceB = minCoursePriceB;
+    // Если минимальная цена "B" не указана, принимаем её за 0
+    if (minCoursePriceB === null) minCoursePriceB = 0;
+    // Если максимальная цена "B" не указана, принимаем её за бесконечность
+    else if (maxCoursePriceB === null) maxCoursePriceB = Infinity;
 
-    // Если минимальные цены равны, сортируем по максимальной цене
-    if (minCoursePriceA === minCoursePriceB)
-      return maxCoursePriceB - maxCoursePriceA;
+    // Если максимальные цены равны, сортируем по минимальной цене
+    if (maxCoursePriceA === maxCoursePriceB)
+      return minCoursePriceB - minCoursePriceA;
 
-    // Сортируем по убыванию минимальной цены
-    if (minCoursePriceA > minCoursePriceB) return -1;
+    // Сортируем по убыванию максимальной цены
+    if (maxCoursePriceA > maxCoursePriceB) return -1;
   });
 };
 
-// console.log(sortByDescending(courses));
+console.log(sortByDescending(courses));
