@@ -32,10 +32,10 @@ const filterByPrice = requiredRange => {
 
     // Если цены в курсе не указаны, такой курс отсеивается фильтром
     if (minCoursePrice === null && maxCoursePrice === null) return false;
-    // Если минимальная цена не указана, приравниваем минимальную цену к максимальной
-    else if (minCoursePrice === null) minCoursePrice = maxCoursePrice;
-    // Если максимальная цена не указана, приравниваем максимальную цену к минимальной
-    else if (maxCoursePrice === null) maxCoursePrice = minCoursePrice;
+    // Если минимальная цена не указана, принимаем её за 0
+    else if (minCoursePrice === null) minCoursePrice = 0;
+    // Если максимальная цена не указана, принимаем её за бесконечность
+    else if (maxCoursePrice === null) maxCoursePrice = Infinity;
 
     // Сравниваем по очереди минимальную цену курса с ценами диапазона, затем максимальную цену курса с ценами диапазона фильтра
     return (
@@ -46,8 +46,8 @@ const filterByPrice = requiredRange => {
   });
 };
 
-// console.log(filterByPrice(requiredRange1));
-console.log(filterByPrice(requiredRange2));
+console.log(filterByPrice(requiredRange1));
+// console.log(filterByPrice(requiredRange2));
 // console.log(filterByPrice(requiredRange3));
 
 const sortByAscending = courses => {
