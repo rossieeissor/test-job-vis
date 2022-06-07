@@ -17,13 +17,13 @@ let requiredRange3 = [200, null];
 
 const filterByPrice = requiredRange => {
   // Деструктурируем заданный диапазон
-  let [minRequiredPrice, maxRequiredPrice] = requiredRange;
+  let [minFilterPrice, maxFilterPrice] = requiredRange;
 
   // Преобразовываем невведённые значения
   // Если значение MIN не введено, принимаем его за 0
-  if (minRequiredPrice === null) minRequiredPrice = 0;
+  if (minFilterPrice === null) minFilterPrice = 0;
   // Если значение MAX не введено, принимаем его за бесконечность
-  if (maxRequiredPrice === null) maxRequiredPrice = Infinity;
+  if (maxFilterPrice === null) maxFilterPrice = Infinity;
 
   // Фильтруем массив с курсами
   return courses.filter(course => {
@@ -37,18 +37,17 @@ const filterByPrice = requiredRange => {
     // Если максимальная цена не указана, принимаем её за бесконечность
     else if (maxCoursePrice === null) maxCoursePrice = Infinity;
 
-    // Сравниваем по очереди минимальную цену курса с ценами диапазона, затем максимальную цену курса с ценами диапазона фильтра
+    // Проверяем, чтобы минимальная цена фильтра находилась в диапазоне между минимальной и максимальной ценами курса. А затем также проверяем максимальную цену фильтра. Если хотя бы одно из выражений верно, то такой курс удовлетворяет требованиям фильтра
     return (
-      (minCoursePrice >= minRequiredPrice &&
-        minCoursePrice <= maxRequiredPrice) ||
-      (maxCoursePrice >= minRequiredPrice && maxCoursePrice <= maxRequiredPrice)
+      (minFilterPrice >= minCoursePrice && minFilterPrice <= maxCoursePrice) ||
+      (maxFilterPrice >= minCoursePrice && maxFilterPrice <= maxCoursePrice)
     );
   });
 };
 
 console.log(filterByPrice(requiredRange1));
-// console.log(filterByPrice(requiredRange2));
-// console.log(filterByPrice(requiredRange3));
+console.log(filterByPrice(requiredRange2));
+console.log(filterByPrice(requiredRange3));
 
 const sortByAscending = courses => {
   // Создаём копию массива
